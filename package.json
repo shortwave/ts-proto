@@ -21,7 +21,7 @@
   },
   "files": [
     "build",
-    "./protoc-gen-ts_proto"
+    "protoc-gen-ts_proto"
   ],
   "keywords": [],
   "author": "",
