@@ -1,6 +1,6 @@
 {
   "name": "@shortwave/ts-proto",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "build/plugin.js",
   "repository": "github:shortwave/ts-proto",
   "bin": {
