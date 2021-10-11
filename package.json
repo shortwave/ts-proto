@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "yarn tsc",
+    "prepublish": "npm run build",
     "setup": "cd ./integration && ./pbjs.sh && ./update-bins.sh && ./codegen.sh",
     "test": "yarn jest -c jest.config.js --maxWorkers=2",
     "release": "np",
