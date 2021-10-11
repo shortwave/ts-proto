@@ -4,7 +4,7 @@ import { maybeAddComment } from './utils';
 import SourceInfo, { Fields } from './sourceInfo';
 import { Context } from './context';
 
-// Output the `const enum { Foo, A = "A", B = "B" }`
+// Output the `enum { Foo, A = "A", B = "B" }`
 export function generateEnum(
   ctx: Context,
   fullName: string,
@@ -20,7 +20,7 @@ export function generateEnum(
   if (wellKnownProtoEnum) {
     chunks.push(wellKnownProtoEnum)
   } else {
-    chunks.push(code`export const enum ${def(fullName)} {`);
+    chunks.push(code`export enum ${def(fullName)} {`);
 
     enumDesc.value.forEach((valueDesc, index) => {
       const info = sourceInfo.lookup(Fields.enum.value, index);

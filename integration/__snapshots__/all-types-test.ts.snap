@@ -64,7 +64,7 @@ import { Any } from './google/protobuf/any';
 
 export const protobufPackage = 'protobuf_test_messages.proto3';
 
-export const enum ForeignEnum {
+export enum ForeignEnum {
   FOREIGN_FOO = 'FOREIGN_FOO',
   FOREIGN_BAR = 'FOREIGN_BAR',
   FOREIGN_BAZ = 'FOREIGN_BAZ',
@@ -243,7 +243,7 @@ export interface TestAllTypesProto3 {
   FieldName18?: number;
 }
 
-export const enum TestAllTypesProto3_NestedEnum {
+export enum TestAllTypesProto3_NestedEnum {
   FOO = 'FOO',
   BAR = 'BAR',
   BAZ = 'BAZ',
@@ -251,7 +251,7 @@ export const enum TestAllTypesProto3_NestedEnum {
   NEG = 'NEG',
 }
 
-export const enum TestAllTypesProto3_AliasedEnum {
+export enum TestAllTypesProto3_AliasedEnum {
   ALIAS_FOO = 'ALIAS_FOO',
   ALIAS_BAR = 'ALIAS_BAR',
   ALIAS_BAZ = 'ALIAS_BAZ',
@@ -273,7 +273,7 @@ export interface NullHypothesisProto3 {}
 
 export interface EnumOnlyProto3 {}
 
-export const enum EnumOnlyProto3_Bool {
+export enum EnumOnlyProto3_Bool {
   kFalse = 'kFalse',
   kTrue = 'kTrue',
 }
