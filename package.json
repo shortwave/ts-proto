@@ -1,5 +1,5 @@
 {
-  "name": "ts-proto",
+  "name": "@shortwave/ts-proto",
   "version": "1.83.1",
   "description": "",
   "main": "build/plugin.js",
@@ -7,10 +7,14 @@
   "bin": {
     "protoc-gen-ts_proto": "./protoc-gen-ts_proto"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "yarn tsc",
     "setup": "cd ./integration && ./pbjs.sh && ./update-bins.sh && ./codegen.sh",
     "test": "yarn jest -c jest.config.js --maxWorkers=2",
+    "release": "np",
     "prettier": "prettier --write {src,tests}/**/*.ts",
     "prettier:check": "prettier --list-different {src,tests}/**/*.ts"
   },
@@ -38,6 +42,7 @@
     "@types/node": "^14.14.37",
     "grpc": "^1.24.6",
     "jest": "^26.6.3",
+    "np": "^7.5.0",
     "prettier": "^2.2.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.6.7",
