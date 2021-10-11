@@ -10,10 +10,7 @@ export const protobufPackage = 'google.protobuf';
  *
  *  The JSON representation for \`NullValue\` is JSON \`null\`.
  */
-export const enum NullValue {
-  /** NULL_VALUE - Null value. */
-  NULL_VALUE = 'NULL_VALUE',
-}
+export type NullValue = null;
 
 /**
  * \`Struct\` represents a structured data value, consisting of fields

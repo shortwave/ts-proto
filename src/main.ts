@@ -40,8 +40,8 @@ export function generateFile(ctx: Context, fileDesc: FileDescriptorProto): [stri
         generateInterfaceDeclaration(ctx, fullName, message, sInfo, maybePrefixPackage(fileDesc, fullProtoTypeName))
       );
     },
-    (fullName, enumDesc, sInfo) => {
-      chunks.push(generateEnum(ctx, fullName, enumDesc, sInfo));
+    (fullName, enumDesc, sInfo, fullProtoTypeName) => {
+      chunks.push(generateEnum(ctx, fullName, enumDesc, sInfo, maybePrefixPackage(fileDesc, fullProtoTypeName)));
     }
   );
   return [moduleName, joinCode(chunks, { on: '\n\n' })];
@@ -62,7 +62,7 @@ function generateInterfaceDeclaration(
   maybeAddComment(sourceInfo, chunks, messageDesc.options?.deprecated);
   const wellKnownProto = generateWellKnownProto(fullProtoTypeName);
   if (wellKnownProto) {
-    chunks.push(wellKnownProto)
+    chunks.push(wellKnownProto);
   } else {
     // interface name should be defined to avoid import collisions
     chunks.push(code`export interface ${def(fullName)} {`);
@@ -87,8 +87,6 @@ function generateWellKnownProto(fullProtoTypeName: string): Code | null {
       return code`export type Struct = {[key: string]: unknown};`;
     case "google.protobuf.Value":
       return code`export type Value = unknown;`;
-    case "google.protobuf.NullValue":
-      return code`export type NullValue = null;`;
     case "google.protobuf.ListValue":
       return code`export type ListValue = unknown[];`;
     default:
