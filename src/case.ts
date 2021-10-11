@@ -1,7 +1,5 @@
-import { Options } from './options';
-
-export function maybeSnakeToCamel(s: string, options: Pick<Options, 'snakeToCamel'>): string {
-  if (options.snakeToCamel && s.includes('_')) {
+export function snakeToCamel(s: string): string {
+  if (s.includes('_')) {
     return s
       .split('_')
       .map((word, i) => {
@@ -16,14 +14,6 @@ export function maybeSnakeToCamel(s: string, options: Pick<Options, 'snakeToCame
   } else {
     return s;
   }
-}
-
-export function camelToSnake(s: string): string {
-  return s
-    .replace(/[\w]([A-Z])/g, function (m) {
-      return m[0] + '_' + m[1];
-    })
-    .toUpperCase();
 }
 
 export function capitalize(s: string): string {

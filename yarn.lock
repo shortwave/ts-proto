@@ -1177,6 +1177,11 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@wix/well-known-protos@^1.0.441":
+  version "1.0.441"
+  resolved "https://registry.yarnpkg.com/@wix/well-known-protos/-/well-known-protos-1.0.441.tgz#7f9856743b20679939dae8266588581b7ca91255"
+  integrity sha512-KD+fz2pOeSBgCiJCDVbsbyYQX6aRobEmWJgt1ApW7W6JtjVaE7K3YxV1DgbDgJumOpUndx0IcWIg04zoLaoTtQ==
+
 JSONStream@^1.0.4:
   version "1.3.5"
   resolved "https://registry.npmjs.org/JSONStream/-/JSONStream-1.3.5.tgz"

@@ -1,16 +1,9 @@
-import {
-  CodeGeneratorRequest,
-  CodeGeneratorResponse,
-  CodeGeneratorResponse_Feature,
-  FileDescriptorProto,
-} from 'ts-proto-descriptors';
-import { promisify } from 'util';
-import { prefixDisableLinter, protoFilesToGenerate, readToBuffer } from './utils';
-import { generateFile, makeUtils } from './main';
-import { createTypeMap } from './types';
-import { Context } from './context';
-import { getTsPoetOpts, optionsFromParameter } from './options';
-import { generateTypeRegistry } from './generate-type-registry';
+import {CodeGeneratorRequest, CodeGeneratorResponse, CodeGeneratorResponse_Feature,} from 'ts-proto-descriptors';
+import {promisify} from 'util';
+import {prefixDisableLinter, protoFilesToGenerate, readToBuffer} from './utils';
+import {generateFile} from './main';
+import {createTypeMap} from './types';
+import {Context} from './context';
 
 // this would be the plugin called by the protoc compiler
 async function main() {
@@ -19,30 +12,17 @@ async function main() {
   // const request = CodeGeneratorRequest.fromObject(json);
   const request = CodeGeneratorRequest.decode(stdin);
 
-  const options = optionsFromParameter(request.parameter);
-  const typeMap = createTypeMap(request, options);
-  const utils = makeUtils(options);
-  const ctx: Context = { typeMap, options, utils };
+  const typeMap = createTypeMap(request);
+  const ctx: Context = { typeMap };
 
-  const filesToGenerate = options.emitImportedFiles ? request.protoFile : protoFilesToGenerate(request);
+  const filesToGenerate = protoFilesToGenerate(request);
   const files = await Promise.all(
     filesToGenerate.map(async (file) => {
       const [path, code] = generateFile(ctx, file);
-      const spec = await code.toStringWithImports({ ...getTsPoetOpts(options), path });
+      const spec = await code.toStringWithImports({ path });
       return { name: path, content: prefixDisableLinter(spec) };
     })
   );
-
-  if (options.outputTypeRegistry) {
-    const utils = makeUtils(options);
-    const ctx: Context = { options, typeMap, utils };
-
-    const path = 'typeRegistry.ts';
-    const code = generateTypeRegistry(ctx);
-
-    const spec = await code.toStringWithImports({ ...getTsPoetOpts(options), path });
-    files.push({ name: path, content: prefixDisableLinter(spec) });
-  }
 
   const response = CodeGeneratorResponse.fromPartial({
     file: files,

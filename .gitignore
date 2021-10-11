@@ -2,6 +2,7 @@
 /build/
 /.idea
 /.vscode
-/integration/*/pbjs.js
-/integration/*/pbjs.d.ts
+/*.iml
+/integration/**/*.ts
+!/integration/**/*-test.ts
 coverage/

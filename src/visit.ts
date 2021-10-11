@@ -1,12 +1,6 @@
-import {
-  DescriptorProto,
-  EnumDescriptorProto,
-  FileDescriptorProto,
-  ServiceDescriptorProto,
-} from 'ts-proto-descriptors';
-import SourceInfo, { Fields } from './sourceInfo';
-import { Options } from './options';
-import { maybeSnakeToCamel } from './case';
+import {DescriptorProto, EnumDescriptorProto, FileDescriptorProto,} from 'ts-proto-descriptors';
+import SourceInfo, {Fields} from './sourceInfo';
+import {snakeToCamel} from './case';
 
 type MessageVisitor = (
   fullName: string,
@@ -26,7 +20,6 @@ export function visit(
   proto: FileDescriptorProto | DescriptorProto,
   sourceInfo: SourceInfo,
   messageFn: MessageVisitor,
-  options: Options,
   enumFn: EnumVisitor = () => {},
   tsPrefix: string = '',
   protoPrefix: string = ''
@@ -38,7 +31,7 @@ export function visit(
     // I.e. Foo_Bar.Zaz_Inner
     const protoFullName = protoPrefix + enumDesc.name;
     // I.e. FooBar_ZazInner
-    const tsFullName = tsPrefix + maybeSnakeToCamel(enumDesc.name, options);
+    const tsFullName = tsPrefix + snakeToCamel(enumDesc.name);
     const nestedSourceInfo = sourceInfo.open(childEnumType, index);
     enumFn(tsFullName, enumDesc, nestedSourceInfo, protoFullName);
   });
@@ -50,10 +43,10 @@ export function visit(
     // I.e. Foo_Bar.Zaz_Inner
     const protoFullName = protoPrefix + message.name;
     // I.e. FooBar_ZazInner
-    const tsFullName = tsPrefix + maybeSnakeToCamel(messageName(message), options);
+    const tsFullName = tsPrefix + snakeToCamel(messageName(message));
     const nestedSourceInfo = sourceInfo.open(childType, index);
     messageFn(tsFullName, message, nestedSourceInfo, protoFullName);
-    visit(message, nestedSourceInfo, messageFn, options, enumFn, tsFullName + '_', protoFullName + '.');
+    visit(message, nestedSourceInfo, messageFn, enumFn, tsFullName + '_', protoFullName + '.');
   });
 }
 
@@ -63,15 +56,4 @@ const builtInNames = ['Date'];
 function messageName(message: DescriptorProto): string {
   const { name } = message;
   return builtInNames.includes(name) ? `${name}Message` : name;
-}
-
-export function visitServices(
-  proto: FileDescriptorProto,
-  sourceInfo: SourceInfo,
-  serviceFn: (desc: ServiceDescriptorProto, sourceInfo: SourceInfo) => void
-): void {
-  proto.service.forEach((serviceDesc, index) => {
-    const nestedSourceInfo = sourceInfo.open(Fields.file.service, index);
-    serviceFn(serviceDesc, nestedSourceInfo);
-  });
 }
