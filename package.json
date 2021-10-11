@@ -20,7 +20,8 @@
     "prettier:check": "prettier --list-different {src,tests}/**/*.ts"
   },
   "files": [
-    "build"
+    "build",
+    "./protoc-gen-ts_proto"
   ],
   "keywords": [],
   "author": "",
