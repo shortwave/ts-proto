@@ -508,6 +508,7 @@ export function toTypeName(ctx: Context, messageDesc: DescriptorProto, field: Fi
   const { options } = ctx;
   if (
     (!isWithinOneOf(field) && isMessage(field) && !options.useOptionals) ||
+    (!isWithinOneOf(field) && isPrimitive(field) && !options.useOptionals && options.undefinedPrimivites) ||
     (isWithinOneOf(field) && options.oneof === OneofOption.PROPERTIES) ||
     (isWithinOneOf(field) && field.proto3Optional)
   ) {
